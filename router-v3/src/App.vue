@@ -1,9 +1,13 @@
 <template>
   <div>
     <the-header></the-header>
-    <transition name="route" mode="out-in">
-      <router-view></router-view>
-    </transition>
+    <!-- into router view, we can pass a properties using the slot... -->
+      <router-view v-slot="slotProps">
+        <transition name="route" mode="out-in">
+          <!-- and the slot props.component inside the component -->
+          <component :is="slotProps.Component"></component>
+        </transition>
+      </router-view>
   </div>
 </template>
 
@@ -38,7 +42,7 @@ body {
   border-radius: 12px;
 }
 
-.route-enter,
+.route-enter-from,
 .route-leave-to {
   opacity: 0;
   transform: translateY(-30px);
@@ -50,7 +54,7 @@ body {
 }
 
 .route-enter-to,
-.route-leave {
+.route-leave-from {
   opacity: 1;
   transform: translateY(0);
 }
